@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2 class="fw-bold mb-4 text-center">Student Dashboard</h2>
+
+<!-- Assigned Tasks Section -->
+<div class="card shadow-sm">
+    <div class="card-header bg-primary text-white fw-bold">
+        Your Assigned Tasks
+    </div>
+
+    <div class="card-body">
+
+        {% if tasks %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Title</th>
+                        <th>Assigned By</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                        <th>Submission</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for t in tasks %}
+                    <tr>
+                        <td>{{ t.title }}</td>
+                        <td class="fw-semibold">{{ t.assigned_by_role }}</td>
+                        <td>{{ t.due_date }}</td>
+
+                        <td>
+                            <span class="badge 
+                                {% if t.status == 'Completed' %} bg-success
+                                {% elif t.status == 'Pending' %} bg-warning text-dark
+                                {% else %} bg-secondary
+                                {% endif %}
+                            ">
+                                {{ t.status }}
+                            </span>
+                        </td>
+
+                        <td>
+                            <a href="{{ url_for('student.submit_task', task_id=t.id) }}"
+                               class="btn btn-sm btn-primary fw-semibold">
+                                Submit / View
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% else %}
+            <p class="text-muted">No tasks assigned yet.</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

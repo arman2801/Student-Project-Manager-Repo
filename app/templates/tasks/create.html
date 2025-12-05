@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2 class="fw-bold mb-4 text-center">Assign Task ({{ from_role|capitalize }})</h2>
+
+<div class="card shadow-sm">
+    <div class="card-header bg-primary text-white fw-bold">
+        Task Assignment Form
+    </div>
+
+    <div class="card-body">
+
+        <form method="POST">
+            {{ form.hidden_tag() }}
+
+            <!-- Title -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">{{ form.title.label.text }}</label>
+                {{ form.title(class="form-control form-control-lg") }}
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">{{ form.description.label.text }}</label>
+                {{ form.description(class="form-control", rows="4") }}
+            </div>
+
+            <!-- Student Dropdown -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">{{ form.student.label.text }}</label>
+                {{ form.student(class="form-select form-select-lg") }}
+            </div>
+
+            <!-- Due Date -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">{{ form.due_date.label.text }}</label>
+                {{ form.due_date(class="form-control form-control-lg") }}
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid mt-3">
+                {{ form.submit(class="btn btn-primary btn-lg fw-bold") }}
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

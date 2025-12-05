@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Your Projects</h2>
+
+<a href="{{ url_for('student.create_project') }}">Create New Project</a>
+<br><br>
+
+{% if projects %}
+    <ul>
+    {% for p in projects %}
+        <li>
+            <strong>{{ p.title }}</strong><br>
+            {{ p.description }}<br>
+            <a href="{{ url_for('student.create_task', project_id=p.id) }}">Add Task</a> |
+            <a href="{{ url_for('student.edit_project', project_id=p.id) }}">Edit</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No projects yet.</p>
+{% endif %}
+
+{% endblock %}

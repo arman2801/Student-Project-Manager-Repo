@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2 class="fw-bold mb-4 text-center">Task Details</h2>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-header bg-primary text-white fw-bold">
+        Task Information
+    </div>
+
+    <div class="card-body">
+
+        <p><strong>Title:</strong> {{ task.title }}</p>
+        <p><strong>Description:</strong> {{ task.description }}</p>
+        <p><strong>Assigned To:</strong> {{ task.student.fullname if task.student else 'N/A' }}</p>
+        <p><strong>Assigned By:</strong> {{ task.assigned_by_role }}</p>
+        <p><strong>Due Date:</strong> {{ task.due_date }}</p>
+
+        <p>
+            <strong>Status:</strong>
+            <span class="badge 
+                {% if task.status == 'Completed' %} bg-success
+                {% elif task.status == 'Pending' %} bg-warning text-dark
+                {% else %} bg-secondary
+                {% endif %}
+            ">
+                {{ task.status }}
+            </span>
+        </p>
+
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-header bg-secondary text-white fw-bold">
+        Student Submission
+    </div>
+
+    <div class="card-body">
+
+        {% if task.submission_text %}
+            <p class="fw-semibold text-muted mb-1">Answer Text:</p>
+            <div class="p-3 bg-light border rounded">
+                {{ task.submission_text }}
+            </div>
+        {% else %}
+            <p class="text-muted">No text submitted.</p>
+        {% endif %}
+
+        <hr>
+
+        {% if task.submission_file %}
+            <p class="fw-semibold text-muted">Uploaded File:</p>
+
+            {% if from_role == 'admin' %}
+                <a href="{{ url_for('admin.download_file', filename=task.submission_file) }}"
+                   class="btn btn-sm btn-primary">
+                    Download File
+                </a>
+            {% else %}
+                <a href="{{ url_for('supervisor.download_file', filename=task.submission_file) }}"
+                   class="btn btn-sm btn-primary">
+                    Download File
+                </a>
+            {% endif %}
+
+        {% else %}
+            <p class="text-muted">No file uploaded.</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

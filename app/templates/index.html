@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="text-center py-4">
+
+    <h2 class="fw-bold mb-3">
+        Welcome to the Student Project & Task Management System
+    </h2>
+
+    <p class="lead text-muted mb-4">
+        This platform enables administrators and supervisors to assign tasks,
+        while students can submit answers using text and secure file uploads.
+    </p>
+
+    <p class="text-secondary mb-4">
+        Please use the navigation bar above to log in as a Student,
+        Admin, or Supervisor to access your respective dashboard.
+    </p>
+
+    <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg me-2">
+        Student Login
+    </a>
+
+    <a href="{{ url_for('auth.admin_login') }}" class="btn btn-outline-primary btn-lg me-2">
+        Admin Login
+    </a>
+
+    <a href="{{ url_for('auth.supervisor_login') }}" class="btn btn-outline-secondary btn-lg">
+        Supervisor Login
+    </a>
+
+</div>
+
+{% endblock %}

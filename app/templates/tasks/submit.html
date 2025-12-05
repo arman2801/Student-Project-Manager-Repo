@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2 class="fw-bold mb-4 text-center">Submit Task: {{ task.title }}</h2>
+
+<!-- Task Information -->
+<div class="card shadow-sm mb-4">
+    <div class="card-header bg-primary text-white fw-bold">
+        Task Information
+    </div>
+
+    <div class="card-body">
+        <p><strong>Description:</strong> {{ task.description }}</p>
+        <p><strong>Due Date:</strong> {{ task.due_date }}</p>
+
+        <p>
+            <strong>Status:</strong>
+            <span class="badge 
+                {% if task.status == 'Completed' %} bg-success
+                {% elif task.status == 'Pending' %} bg-warning text-dark
+                {% else %} bg-secondary
+                {% endif %}
+            ">
+                {{ task.status }}
+            </span>
+        </p>
+    </div>
+</div>
+
+<!-- Submission Form -->
+<div class="card shadow-sm">
+    <div class="card-header bg-secondary text-white fw-bold">
+        Submit Your Work
+    </div>
+
+    <div class="card-body">
+
+        <form method="POST" enctype="multipart/form-data" class="mt-2">
+            {{ form.hidden_tag() }}
+
+            <!-- Text submission -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">
+                    {{ form.submission_text.label.text }}
+                </label>
+                {{ form.submission_text(class="form-control", rows="5") }}
+            </div>
+
+            <!-- File submission -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">
+                    {{ form.file.label.text }}
+                </label>
+                {{ form.file(class="form-control") }}
+            </div>
+
+            <!-- Submit button -->
+            <div class="d-grid mt-3">
+                {{ form.submit(class="btn btn-primary btn-lg fw-bold") }}
+            </div>
+        </form>
+
+        {% if task.submission_file %}
+            <p class="mt-3 text-muted">
+                <strong>Current Uploaded File:</strong> {{ task.submission_file }}
+            </p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
